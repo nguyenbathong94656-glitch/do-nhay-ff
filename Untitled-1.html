@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Độ Nhạy FF</title>
+
+    <style>
+
+        /* =========================
+           CÀI ĐẶT CHUNG
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #172554,
+                    #020617 60%
+                );
+
+            color: white;
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           THANH MENU
+        ========================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: rgba(2, 6, 23, 0.92);
+
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        nav {
+            width: 90%;
+            max-width: 1200px;
+
+            margin: auto;
+
+            min-height: 75px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+
+            font-weight: 900;
+
+            color: #38bdf8;
+
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .menu {
+            display: flex;
+
+            gap: 30px;
+
+            list-style: none;
+        }
+
+        .menu a {
+            color: #cbd5e1;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            color: #38bdf8;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 650px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            padding: 80px 20px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 8px 18px;
+
+            border-radius: 30px;
+
+            background: rgba(56,189,248,0.12);
+
+            border: 1px solid rgba(56,189,248,0.3);
+
+            color: #38bdf8;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: clamp(45px, 8vw, 90px);
+
+            line-height: 1;
+
+            margin-bottom: 25px;
+
+            font-weight: 900;
+        }
+
+        .hero h1 span {
+            color: #38bdf8;
+        }
+
+        .hero p {
+            color: #94a3b8;
+
+            font-size: 19px;
+
+            line-height: 1.7;
+
+            max-width: 700px;
+
+            margin: auto;
+        }
+
+        .hero-buttons {
+            margin-top: 35px;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+
+            padding: 15px 30px;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: #38bdf8;
+
+            color: #020617;
+        }
+
+        .btn-secondary {
+            background: #1e293b;
+
+            color: white;
+
+            border: 1px solid #334155;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.3);
+        }
+
+
+        /* =========================
+           SECTION
+        ========================= */
+
+        .section {
+            width: 90%;
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 90px 0;
+        }
+
+        .section-title {
+            text-align: center;
+
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 40px;
+
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: #94a3b8;
+
+            font-size: 17px;
+        }
+
+
+        /* =========================
+           CÔNG CỤ ĐỘ NHẠY
+        ========================= */
+
+        .sensitivity-box {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(30,41,59,0.9),
+                    rgba(15,23,42,0.95)
+                );
+
+            border: 1px solid #334155;
+
+            border-radius: 25px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.25);
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 25px;
+
+            margin-bottom: 35px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 10px;
+
+            color: #cbd5e1;
+
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+
+            padding: 15px;
+
+            background: #020617;
+
+            color: white;
+
+            border: 1px solid #475569;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        select:focus {
+            border-color: #38bdf8;
+        }
+
+
+        /* =========================
+           ĐỘ NHẠY
+        ========================= */
+
+        .sensitivity-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 15px;
+
+            margin-top: 30px;
+        }
+
+        .sensitivity-card {
+
+            background: #020617;
+
+            border: 1px solid #334155;
+
+            border-radius: 18px;
+
+            padding: 25px 15px;
+
+            text-align: center;
+
+            transition: 0.3s;
+        }
+
+        .sensitivity-card:hover {
+            transform: translateY(-5px);
+
+            border-color: #38bdf8;
+        }
+
+        .sensitivity-card h3 {
+            font-size: 15px;
+
+            color: #94a3b8;
+
+            margin-bottom: 15px;
+        }
+
+        .number {
+            font-size: 40px;
+
+            font-weight: 900;
+
+            color: #38bdf8;
+        }
+
+        .unit {
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           NÚT HÀNH ĐỘNG
+        ========================= */
+
+        .actions {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            margin-top: 35px;
+
+            flex-wrap: wrap;
+        }
+
+
+        /* =========================
+           THẺ THÔNG TIN
+        ========================= */
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+        }
+
+        .info-card {
+
+            background: #0f172a;
+
+            border: 1px solid #1e293b;
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            transition: 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-7px);
+
+            border-color: #38bdf8;
+        }
+
+        .info-icon {
+            font-size: 40px;
+
+            margin-bottom: 20px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            color: #94a3b8;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           HƯỚNG DẪN
+        ========================= */
+
+        .guide {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 30px;
+        }
+
+        .guide-box {
+
+            background: #0f172a;
+
+            border: 1px solid #1e293b;
+
+            border-radius: 20px;
+
+            padding: 30px;
+        }
+
+        .guide-box h3 {
+            margin-bottom: 20px;
+
+            color: #38bdf8;
+        }
+
+        .guide-box ol {
+            padding-left: 20px;
+
+            color: #cbd5e1;
+        }
+
+        .guide-box li {
+            margin-bottom: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            text-align: center;
+
+            padding: 40px 20px;
+
+            background: #020617;
+
+            border-top: 1px solid #1e293b;
+
+            color: #64748b;
+        }
+
+        footer strong {
+            color: #38bdf8;
+        }
+
+
+        /* =========================
+           THÔNG BÁO
+        ========================= */
+
+        .toast {
+
+            position: fixed;
+
+            bottom: 30px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%)
+                translateY(100px);
+
+            background: #22c55e;
+
+            color: white;
+
+            padding: 15px 25px;
+
+            border-radius: 12px;
+
+            font-weight: bold;
+
+            opacity: 0;
+
+            transition: 0.4s;
+
+            z-index: 9999;
+        }
+
+        .toast.show {
+
+            opacity: 1;
+
+            transform:
+                translateX(-50%)
+                translateY(0);
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .sensitivity-grid {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+            .info-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .guide {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            nav {
+                flex-direction: column;
+
+                padding: 20px 0;
+
+                gap: 15px;
+            }
+
+            .menu {
+                gap: 15px;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+            .hero {
+                min-height: 550px;
+            }
+
+            .form-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .sensitivity-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .sensitivity-box {
+                padding: 20px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <nav>
+
+            <div class="logo">
+                🎯 <span>ĐỘ NHẠY</span> FF
+            </div>
+
+            <ul class="menu">
+
+                <li>
+                    <a href="#home">Trang chủ</a>
+                </li>
+
+                <li>
+                    <a href="#sensitivity">
+                        Độ nhạy
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#guide">
+                        Hướng dẫn
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#about">
+                        Giới thiệu
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================
+         TRANG CHỦ
+    ========================= -->
+
+    <section id="home" class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🎮 WEBSITE ĐỘ NHẠY FREE FIRE
+            </div>
+
+            <h1>
+                ĐỘ NHẠY
+                <span>FF</span>
+            </h1>
+
+            <p>
+                Công cụ tham khảo độ nhạy Free Fire
+                dành cho nhiều loại thiết bị.
+                Chọn thiết bị của bạn và tạo
+                một cấu hình để bắt đầu.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#sensitivity">
+
+                    <button class="btn btn-primary">
+                        🎯 Tạo độ nhạy
+                    </button>
+
+                </a>
+
+                <a href="#guide">
+
+                    <button class="btn btn-secondary">
+                        📖 Xem hướng dẫn
+                    </button>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CÔNG CỤ
+    ========================= -->
+
+    <section
+        id="sensitivity"
+        class="section"
+    >
+
+        <div class="section-title">
+
+            <h2>🎯 Tạo độ nhạy</h2>
+
+            <p>
+                Chọn thiết bị và phong cách
+                bạn muốn tham khảo.
+            </p>
+
+        </div>
+
+
+        <div class="sensitivity-box">
+
+
+            <!-- FORM -->
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        📱 Thiết bị
+                    </label>
+
+                    <select id="device">
+
+                        <option value="iphone">
+                            iPhone
+                        </option>
+
+                        <option value="android">
+                            Android
+                        </option>
+
+                        <option value="low">
+                            Máy cấu hình thấp
+                        </option>
+
+                        <option value="high">
+                            Máy cấu hình cao
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        🎮 Phong cách
+                    </label>
+
+                    <select id="style">
+
+                        <option value="balanced">
+                            Cân bằng
+                        </option>
+
+                        <option value="headshot">
+                            Headshot
+                        </option>
+
+                        <option value="drag">
+                            Kéo tâm
+                        </option>
+
+                        <option value="stable">
+                            Ổn định
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ĐỘ NHẠY -->
+
+            <div class="sensitivity-grid">
+
+
+                <div class="sensitivity-card">
+
+                    <h3>
+                        GENERAL
+                    </h3>
+
+                    <div
+                        id="general"
+                        class="number"
+                    >
+                        190
+                    </div>
+
+                    <div class="unit">
+                        / 200
+                    </div>
+
+                </div>
+
+
+
+                <div class="sensitivity-card">
+
+                    <h3>
+                        RED DOT
+                    </h3>
+
+                    <div
+                        id="redDot"
+                        class="number"
+                    >
+                        180
+                    </div>
+
+                    <div class="unit">
+                        / 200
+                    </div>
+
+                </div>
+
+
+
+                <div class="sensitivity-card">
+
+                    <h3>
+                        2X SCOPE
+                    </h3>
+
+                    <div
+                        id="scope2"
+                        class="number"
+                    >
+                        170
+                    </div>
+
+                    <div class="unit">
+                        / 200
+                    </div>
+
+                </div>
+
+
+
+                <div class="sensitivity-card">
+
+                    <h3>
+                        4X SCOPE
+                    </h3>
+
+                    <div
+                        id="scope4"
+                        class="number"
+                    >
+                        160
+                    </div>
+
+                    <div class="unit">
+                        / 200
+                    </div>
+
+                </div>
+
+
+
+                <div class="sensitivity-card">
+
+                    <h3>
+                        SNIPER
+                    </h3>
+
+                    <div
+                        id="sniper"
+                        class="number"
+                    >
+                        120
+                    </div>
+
+                    <div class="unit">
+                        / 200
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- NÚT -->
+
+            <div class="actions">
+
+                <button
+                    class="btn btn-primary"
+                    onclick="generateSensitivity()"
+                >
+                    🔄 Tạo độ nhạy
+                </button>
+
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="copySensitivity()"
+                >
+                    📋 Sao chép
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         THÔNG TIN
+    ========================= -->
+
+    <section
+        id="about"
+        class="section"
+    >
+
+        <div class="section-title">
+
+            <h2>🔥 Vì sao dùng website?</h2>
+
+            <p>
+                Tạo cấu hình nhanh và dễ sử dụng.
+            </p>
+
+        </div>
+
+
+        <div class="info-grid">
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    📱
+                </div>
+
+                <h3>
+                    Nhiều thiết bị
+                </h3>
+
+                <p>
+                    Có thể lựa chọn iPhone,
+                    Android hoặc các nhóm
+                    thiết bị theo hiệu năng.
+                </p>
+
+            </div>
+
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    🎯
+                </div>
+
+                <h3>
+                    Nhiều phong cách
+                </h3>
+
+                <p>
+                    Tham khảo các cấu hình
+                    khác nhau tùy theo cách
+                    bạn muốn điều khiển.
+                </p>
+
+            </div>
+
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    ⚡
+                </div>
+
+                <h3>
+                    Nhanh chóng
+                </h3>
+
+                <p>
+                    Chọn thiết bị, chọn phong cách
+                    và tạo cấu hình chỉ với
+                    một nút bấm.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         HƯỚNG DẪN
+    ========================= -->
+
+    <section
+        id="guide"
+        class="section"
+    >
+
+        <div class="section-title">
+
+            <h2>📖 Hướng dẫn</h2>
+
+            <p>
+                Cách sử dụng trang web.
+            </p>
+
+        </div>
+
+
+        <div class="guide">
+
+
+            <div class="guide-box">
+
+                <h3>
+                    🎯 Cách tạo độ nhạy
+                </h3>
+
+                <ol>
+
+                    <li>
+                        Chọn loại thiết bị.
+                    </li>
+
+                    <li>
+                        Chọn phong cách chơi.
+                    </li>
+
+                    <li>
+                        Nhấn nút
+                        <strong>
+                            "Tạo độ nhạy"
+                        </strong>.
+                    </li>
+
+                    <li>
+                        Xem các thông số
+                        được tạo.
+                    </li>
+
+                    <li>
+                        Nhấn
+                        <strong>
+                            "Sao chép"
+                        </strong>
+                        nếu muốn lưu lại.
+                    </li>
+
+                </ol>
+
+            </div>
+
+
+
+            <div class="guide-box">
+
+                <h3>
+                    ⚠️ Lưu ý
+                </h3>
+
+                <ol>
+
+                    <li>
+                        Độ nhạy chỉ mang tính
+                        tham khảo.
+                    </li>
+
+                    <li>
+                        Mỗi thiết bị có cảm giác
+                        điều khiển khác nhau.
+                    </li>
+
+                    <li>
+                        Hãy điều chỉnh dần để
+                        tìm mức phù hợp.
+                    </li>
+
+                    <li>
+                        Không có một cấu hình
+                        phù hợp tuyệt đối cho
+                        tất cả người chơi.
+                    </li>
+
+                </ol>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+            © 2026
+            <strong>Độ Nhạy FF</strong>
+            — Website cá nhân
+        </p>
+
+        <p style="margin-top:10px;">
+            Được tạo bằng HTML, CSS & JavaScript
+        </p>
+
+    </footer>
+
+
+
+    <!-- THÔNG BÁO -->
+
+    <div
+        id="toast"
+        class="toast"
+    >
+        Đã sao chép!
+    </div>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+
+        /* =========================
+           DỮ LIỆU ĐỘ NHẠY
+        ========================= */
+
+        const sensitivityData = {
+
+            iphone: {
+
+                balanced: [190, 180, 170, 160, 120],
+
+                headshot: [200, 195, 185, 175, 130],
+
+                drag: [195, 188, 178, 165, 125],
+
+                stable: [175, 165, 155, 145, 110]
+
+            },
+
+
+            android: {
+
+                balanced: [185, 175, 165, 155, 115],
+
+                headshot: [195, 188, 178, 168, 125],
+
+                drag: [190, 182, 172, 162, 120],
+
+                stable: [170, 160, 150, 140, 105]
+
+            },
+
+
+            low: {
+
+                balanced: [170, 160, 150, 140, 100],
+
+                headshot: [185, 175, 165, 150, 110],
+
+                drag: [180, 170, 160, 150, 105],
+
+                stable: [155, 145, 135, 125, 95]
+
+            },
+
+
+            high: {
+
+                balanced: [195, 185, 175, 165, 125],
+
+                headshot: [200, 198, 190, 180, 135],
+
+                drag: [198, 190, 180, 170, 130],
+
+                stable: [180, 170, 160, 150, 115]
+
+            }
+
+        };
+
+
+        /* =========================
+           TẠO ĐỘ NHẠY
+        ========================= */
+
+        function generateSensitivity() {
+
+            const device =
+                document.getElementById("device").value;
+
+            const style =
+                document.getElementById("style").value;
+
+
+            const values =
+                sensitivityData[device][style];
+
+
+            document.getElementById("general")
+                .textContent = values[0];
+
+
+            document.getElementById("redDot")
+                .textContent = values[1];
+
+
+            document.getElementById("scope2")
+                .textContent = values[2];
+
+
+            document.getElementById("scope4")
+                .textContent = values[3];
+
+
+            document.getElementById("sniper")
+                .textContent = values[4];
+
+
+            showToast(
+                "Đã tạo độ nhạy mới 🎯"
+            );
+
+        }
+
+
+
+        /* =========================
+           SAO CHÉP
+        ========================= */
+
+        function copySensitivity() {
+
+
+            const general =
+                document.getElementById("general")
+                    .textContent;
+
+
+            const redDot =
+                document.getElementById("redDot")
+                    .textContent;
+
+
+            const scope2 =
+                document.getElementById("scope2")
+                    .textContent;
+
+
+            const scope4 =
+                document.getElementById("scope4")
+                    .textContent;
+
+
+            const sniper =
+                document.getElementById("sniper")
+                    .textContent;
+
+
+            const text =
+
+`ĐỘ NHẠY FF
+
+General: ${general}
+Red Dot: ${redDot}
+2X Scope: ${scope2}
+4X Scope: ${scope4}
+Sniper: ${sniper}`;
+
+
+            navigator.clipboard.writeText(text)
+                .then(() => {
+
+                    showToast(
+                        "Đã sao chép độ nhạy 📋"
+                    );
+
+                });
+
+        }
+
+
+
+        /* =========================
+           THÔNG BÁO
+        ========================= */
+
+        function showToast(message) {
+
+            const toast =
+                document.getElementById("toast");
+
+
+            toast.textContent = message;
+
+
+            toast.classList.add("show");
+
+
+            setTimeout(() => {
+
+                toast.classList.remove("show");
+
+            }, 2500);
+
+        }
+
+
+        /* =========================
+           TỰ ĐỘNG TẠO LẦN ĐẦU
+        ========================= */
+
+        generateSensitivity();
+
+
+    </script>
+
+
+</body>
+
+</html>
